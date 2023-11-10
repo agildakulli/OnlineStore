@@ -1,8 +1,8 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -16,4 +16,10 @@ public class User {
 
     public User() {
     }
+    @ManyToMany
+    @JoinTable(name="user_product",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products;
+
 }

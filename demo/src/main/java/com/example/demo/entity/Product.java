@@ -1,9 +1,8 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Product {
@@ -13,7 +12,13 @@ public class Product {
     private String name;
     private double price;
 
-    // Constructors, getters, and setters...
+    @ManyToMany(mappedBy = "products")
+    private List<User>users;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
 }
 
 
