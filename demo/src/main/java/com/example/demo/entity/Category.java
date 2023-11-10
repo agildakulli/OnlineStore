@@ -11,5 +11,4 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    // Constructors, getters, and setters...,xd,d
 }
