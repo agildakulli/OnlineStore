@@ -22,4 +22,6 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
 
+    public void setId(Long userId) {
+    }
 }
