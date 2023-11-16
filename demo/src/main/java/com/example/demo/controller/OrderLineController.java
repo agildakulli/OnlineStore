@@ -16,5 +16,4 @@ public class OrderLineController {
         this.orderLineService = orderLineService;
     }
 
-    // Similar methods for getAllOrderLines, getOrderLineById, createOrderLine, updateOrderLine, and deleteOrderLine
 }
