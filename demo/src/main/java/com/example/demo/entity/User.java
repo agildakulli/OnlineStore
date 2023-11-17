@@ -46,7 +46,6 @@ public class User {
             @Pattern(regexp = ".*\\d.*", message = "Password must contain at least one digit")})
     @Column(name = "PASSWORD")
     private String password;
-
     private String role;
     private String address;
 
