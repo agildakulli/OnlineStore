@@ -1,30 +1,56 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CategoryDto;
 import com.example.demo.entity.Category;
+import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.respository.CategoryRespository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 public class CategoryService {
-    private final CategoryRespository categoryRespository;
-    @Autowired
-    public CategoryService(CategoryRespository categoryRespository){
-        this.categoryRespository=categoryRespository;
+
+    private CategoryMapper categoryMapper;
+    private CategoryRespository categoryRespository;
+
+    public CategoryDto save(CategoryDto categoryDto){
+        Category savedCategory = categoryRespository.save(categoryMapper.mapToEntity(categoryDto));
+
+        return categoryMapper.mapToDto(savedCategory);
     }
-    public List<Category> getAllCategories(){
-        return categoryRespository.findAll();
+
+    public List<CategoryDto> findAll(){
+        List<Category> allCategory = categoryRespository.findAll();
+
+        return allCategory.stream().map(category -> categoryMapper.mapToDto(category))
+                .collect(Collectors.toList());
     }
-    public Optional<Category>getCategoryById(Long categoryId){
-        return categoryRespository.findById(categoryId);
+
+    public CategoryDto findById(long categoryId){
+        Category existingCategory = categoryRespository.findById(categoryId).orElseThrow(() ->
+                new RuntimeException("Category with id: " + categoryId + " not found"));
+
+        return categoryMapper.mapToDto(existingCategory);
     }
-    public Category saveCategory ( Category category){
-        return categoryRespository.save(category);
+
+    public CategoryDto update(CategoryDto categoryDto, long categoryId) {
+        Category category = categoryMapper.mapToEntity(categoryDto);
+        category.setId(categoryId);
+        category.setName(categoryDto.getName());
+        category.setDescription(categoryDto.getDescription());
+
+        Category savedCategory = categoryRespository.save(category);
+
+        return categoryMapper.mapToDto(category);
     }
-    public void deleteCategory(Long categoryId){
-        categoryRespository.deleteById(categoryId);
+
+    public void delete(long categoryId){
+        Category category = new Category();
+        category.setId(categoryId);
+        categoryRespository.delete(category);
     }
 }
