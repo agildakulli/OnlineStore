@@ -1,30 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.User;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.respository.UserRespository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-
+@AllArgsConstructor
 @Service
 public class UserService {
-    private final UserRespository userRespository;
-    @Autowired
-    public UserService(UserRespository userRespository){
-        this.userRespository=userRespository;
-    }
-    public List<User> getAllUser(){
-        return userRespository.findAll();
-    }
-    public Optional<User> getUserById(Long userId){
-        return userRespository.findById(userId);
-    }
-    public User saveUser(User user){
-        return userRespository.save(user);
-    }
-    public void deleteUser(Long userId){
-        userRespository.deleteById(userId);
-    }
+
+    private UserRespository userRespository;
+    private UserMapper userMapper;
 }
