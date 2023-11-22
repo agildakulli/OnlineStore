@@ -17,8 +17,10 @@ public class OrderDto {
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    @JoinColumn(name = "total_cost")
     private double totalCost;
+    @JoinColumn(name = "delivery_address")
     private String deliveryAddress;
+    @JoinColumn(name = "date_of_submission")
     private Date dateOfSubmission;
 }

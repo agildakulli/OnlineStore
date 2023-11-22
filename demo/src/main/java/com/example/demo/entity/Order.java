@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -20,10 +22,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
 
     private double totalCost;
     private String deliveryAddress;
@@ -31,9 +29,12 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+    @ManyToMany
+    private List<Product> products = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderLine> orderLines;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 }
