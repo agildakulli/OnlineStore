@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,9 +23,8 @@ public class Product {
     @NotBlank(message = "Price cannot be blank")
     private double price;
 
-    @ManyToMany(mappedBy = "products")
-    private List<User>users;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 

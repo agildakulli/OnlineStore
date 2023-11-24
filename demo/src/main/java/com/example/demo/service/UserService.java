@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.entity.User;
 import com.example.demo.respository.UserRespository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +15,11 @@ public class UserService {
 
     private UserRespository userRepository;
 
-    private PasswordEncoder passEncoder;
+//    private PasswordEncoder passEncoder;
 
 
     public User save(User user) {
-        user.setPassword(passEncoder.encode(user.getPassword()));
+//        user.setPassword(passEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -37,7 +36,7 @@ public class UserService {
 //                  String encodedPassword = passEncoder.encode(user.getPassword());
 //                  existingUser.get().setPassword(encodedPassword);
 
-            existingUser.get().setPassword(passEncoder.encode(user.getPassword()));
+//            existingUser.get().setPassword(passEncoder.encode(user.getPassword()));
 
             existingUser.get().setId(id);
 

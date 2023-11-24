@@ -21,4 +21,8 @@ public class ProductDto {
     private String name;
     @NotBlank(message = "Price cannot be blank")
     private double price;
+
+    private Long categoryId;
+
+    private String categoryName;
 }
