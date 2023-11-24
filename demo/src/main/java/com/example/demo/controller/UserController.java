@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -20,13 +21,12 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<User> save(@Valid @RequestBody User user) {
-        return new  ResponseEntity<User> (userService.save(user), HttpStatus.CREATED);
+    public ResponseEntity<UserDto> save(@Valid @RequestBody UserDto userDto) {
+        return new  ResponseEntity<UserDto> (userService.save(userDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateById(@Valid @RequestBody User user,
-                                           @PathVariable("id") long id) {
+    public ResponseEntity<User> updateById(@Valid @RequestBody User user, @PathVariable("id") long id) {
         return ResponseEntity.ok(userService.updateUserById(user, id));
     }
 
