@@ -40,29 +40,12 @@ public class ClientService {
     }
 
     public ClientDto findById(Long clientId) {
-//        Optional<Student> existingStudent = studentRepository .findById(studentId);
-//        if (existingStudent.isPresent()){
-//            return studentMapper.mapToDto(existingStudent.get());
-//        }
-//        else throw  new RuntimeException("Student with id: "+studentId+" was not found in the database.");
-
         Client existingClient = clientRespository.findById(clientId).orElseThrow(()->
                 new RuntimeException("Student with id: "+clientId+" was not found in the database."));
         return clientMapper.mapToDto(existingClient);
     }
 
     public ClientDto update(ClientDto clientDto, Long clientId) {
-//        Student existingStudent = studentRepository.findById(studentId).orElseThrow(() ->
-//                new RuntimeException("Student not found with ID: " + studentId));
-//        existingStudent.setId(studentId);
-//        existingStudent.setFirstName(studentDto.getFirstName());
-//        existingStudent.setLastName(studentDto.getLastName());
-//        existingStudent.setEmail(studentDto.getEmail());
-//        existingStudent.setPassword(studentDto.getPassword());
-//        existingStudent.setAge(studentDto.getAge());
-//        Student savedStudent = studentRepository.save(existingStudent);
-//        return studentMapper.mapToDto(savedStudent);
-
         Optional<Client> existingClient = clientRespository.findById(clientId);
         Category category = categoryRepository.findById(clientDto.getCategoryId()).orElseThrow(
                 ()-> new RuntimeException("Category with id: "+clientDto.getCategoryId()+" not found"));
@@ -81,10 +64,7 @@ public class ClientService {
             Client savedClient = clientRespository.save(clientToUpdate);
             return clientMapper.mapToDto(savedClient);
         } else {throw new RuntimeException("Student not found with ID: " + clientId);}
-
-
-
-
+        
     }
 
     public void delete(Long clientId) {

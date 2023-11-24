@@ -10,7 +10,7 @@ import java.util.List;
 
     @AllArgsConstructor
     @RestController
-    @RequestMapping("/api/students")
+    @RequestMapping("/api/clients")
     public class ClientController {
 
         private ClientService clientService;
@@ -30,7 +30,7 @@ import java.util.List;
 
         //    @PreAuthorize("hasRole('client')")
         @GetMapping("/view/{clientId}")
-        public ClientDto findById(@PathVariable(name = "studentId") Long clientId) {
+        public ClientDto findById(@PathVariable(name = "clientId") Long clientId) {
             return clientService.findById(clientId);
         }
 
