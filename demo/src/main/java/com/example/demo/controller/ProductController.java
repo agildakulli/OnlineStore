@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProductDto;
 import com.example.demo.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,28 +13,29 @@ public class ProductController {
 
     private  ProductService productService;
 
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+@PostMapping("/save")
+public ProductDto save(@Valid @RequestBody ProductDto productDto) {
+    return productService.save(productDto);
+}
 
     @GetMapping
-    public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
+    public List<ProductDto> findAll() {
+        return productService.findAll();
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable Long productId) {
-        return productService.getProductById(productId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ProductDto findById(@PathVariable(name = "productId") Long productId){
+    return productService.findById(productId);
+//    ResponseEntity<ProductDto> getProductById(@PathVariable Long productId) {
+//        return productService.getProductById(productId)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
     }
+//    @GetMapping("/view/{studentId}")
+//    public StudentDto findById(@PathVariable(name = "studentId") Long studentId) {
+//        return studentService.findById(studentId);
+//    }
 
-    @PostMapping
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
-        ProductDto createdProduct = productService.createProduct(productDto);
-        return ResponseEntity.ok(createdProduct);
-    }
 
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productId,
@@ -49,9 +50,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
-        productService.deleteProduct(productId);
-        return ResponseEntity.noContent().build();
+    public String delete(@PathVariable(name = "productId") Long productId) {
+        productService.delete(productId);
+        return "Product successfully deleted!";
     }
 
 }

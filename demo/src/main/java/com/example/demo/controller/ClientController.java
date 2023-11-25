@@ -35,7 +35,8 @@ import java.util.List;
         }
 
         @PutMapping("/{clientId}")
-        public ClientDto update(@Valid @RequestBody ClientDto clientDto, @PathVariable(name = "clientId") Long clientId) {
+        public ClientDto update(@Valid @RequestBody ClientDto clientDto,
+                                @PathVariable(name = "clientId") Long clientId) {
             return clientService.update(clientDto,clientId);
         }
 
@@ -43,7 +44,7 @@ import java.util.List;
         @DeleteMapping("/{clientId}")
         public String delete(@PathVariable(name = "clientId") Long clientId) {
             clientService.delete(clientId);
-            return "Student successfully deleted!";
+            return "Client successfully deleted!";
         }
 
 

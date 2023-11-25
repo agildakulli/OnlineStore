@@ -7,9 +7,9 @@ import com.example.demo.respository.ProductRespository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @AllArgsConstructor
 @Service
@@ -23,16 +23,27 @@ public class ProductService {
 //        return products;
 //    }
 
-    public Optional<ProductDto> getProductById(Long productId) {
-        Optional<Product> productOptional = productRepository.findById(productId);
-        return productOptional.map((Function<? super Product, ? extends ProductDto>) updatedProductDto -> productMapper.mapToDto(updatedProductDto));
+    public List<ProductDto> findAll() {
+        List<Product> productList = productRepository.findAll();
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (Product product : productList) {
+            productDtoList.add(productMapper.mapToDto(product));
+        }
+        return productDtoList;
     }
 
-    public ProductDto createProduct(ProductDto productDto) {
+    public ProductDto save(ProductDto productDto) {
         Product product = productMapper.mapToEntity(productDto);
         Product savedProduct = productRepository.save(product);
         return productMapper.mapToDto(savedProduct);
     }
+    public ProductDto findById(Long productId) {
+
+       Product existingProduct = productRepository.findById(productId).orElseThrow(()->
+                new RuntimeException("Product with id: "+productId+" was not found in the database."));
+        return productMapper.mapToDto(existingProduct);
+    }
+
 
     public ProductDto updateProduct(Long productId, ProductDto updatedProductDto) {
         Optional<Product> existingProductOptional = productRepository.findById(productId);
@@ -47,11 +58,12 @@ public class ProductService {
         return null;
     }
 
-    public void deleteProduct(Long productId) {
-        productRepository.deleteById(productId);
+    public void delete(Long productId) {
+        Optional<Product> existingProduct= productRepository.findById(productId);
+
+        if (existingProduct.isPresent()){
+            productRepository.delete(existingProduct.get());
+        }else {throw new RuntimeException("Product not found with ID: " + productId);}
     }
 
-    public List<ProductDto> getAllProducts() {
-        return  getAllProducts();
-    }
 }
